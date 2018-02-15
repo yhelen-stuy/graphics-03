@@ -46,16 +46,18 @@ func (matrix Matrix) Ident() error {
 // Performs function:
 // m1 * m2 -> m2
 func (m2 Matrix) Mult(m1 Matrix) error {
+	// TODO: Make sure it works on non identity matrix
 	if m2.rows != m1.cols {
 		return errors.New("Error: dimensions incompatible")
 	}
-	// TODO: don't account original value in m2
+	value := 0.0
 	for r1 := 0; r1 < m1.rows; r1++ {
 		for c2 := 0; c2 < m2.cols; c2++ {
 			for rc := 0; rc < m1.cols; rc++ {
-				fmt.Printf("Setting [%d,%d] as %.2f * %.2f\n", r1, c2, m1.mat[r1][rc], m2.mat[rc][c2])
-				m2.mat[r1][c2] += m1.mat[r1][rc] * m2.mat[rc][c2]
+				value += m1.mat[r1][rc] * m2.mat[rc][c2]
 			}
+			m2.mat[r1][c2] = value
+			value = 0
 		}
 	}
 	return nil
