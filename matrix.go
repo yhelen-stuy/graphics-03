@@ -1,6 +1,10 @@
 package main
 
-import ()
+import (
+	"bytes"
+	"errors"
+	"fmt"
+)
 
 type Matrix struct {
 	mat        [][]float64
@@ -9,14 +13,41 @@ type Matrix struct {
 }
 
 func MakeMatrix(rows, cols int) *Matrix {
-	mat = make([][]float64, rows)
+	mat := make([][]float64, rows)
 	for i := range mat {
 		mat[i] = make([]float64, cols)
 	}
-	matrix = &Matrix{
+	matrix := &Matrix{
 		mat:  mat,
 		rows: rows,
 		cols: cols,
 	}
 	return matrix
+}
+
+func (matrix Matrix) Ident() error {
+	if matrix.rows != matrix.cols {
+		return errors.New("Error: not a square mat")
+	}
+	for i := range matrix.mat {
+		for j := range matrix.mat[i] {
+			if i == j {
+				matrix.mat[i][j] = 1.0
+			} else {
+				matrix.mat[i][j] = 0.0
+			}
+		}
+	}
+	return nil
+}
+
+func (matrix Matrix) String() string {
+	var buf bytes.Buffer
+	for i := range matrix.mat {
+		for _, c := range matrix.mat[i] {
+			buf.WriteString(fmt.Sprintf("%.2f ", c))
+		}
+		buf.WriteString("\n")
+	}
+	return buf.String()
 }
