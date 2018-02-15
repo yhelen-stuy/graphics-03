@@ -49,8 +49,14 @@ func (m2 Matrix) Mult(m1 Matrix) error {
 	if m2.rows != m1.cols {
 		return errors.New("Error: dimensions incompatible")
 	}
-	for i := 0; i < m1.cols; i++ {
-		continue
+	// TODO: don't account original value in m2
+	for r1 := 0; r1 < m1.rows; r1++ {
+		for c2 := 0; c2 < m2.cols; c2++ {
+			for rc := 0; rc < m1.cols; rc++ {
+				fmt.Printf("Setting [%d,%d] as %.2f * %.2f\n", r1, c2, m1.mat[r1][rc], m2.mat[rc][c2])
+				m2.mat[r1][c2] += m1.mat[r1][rc] * m2.mat[rc][c2]
+			}
+		}
 	}
 	return nil
 }

@@ -6,8 +6,17 @@ import (
 
 func main() {
 	var mat *Matrix
-	mat = MakeMatrix(4, 4)
+	var id *Matrix
+	mat = MakeMatrix(2, 2)
+	id = MakeMatrix(2, 2)
+	id.Ident()
+	fmt.Println(id)
+	for i := range mat.mat {
+		for j := range mat.mat[i] {
+			mat.mat[i][j] = 2
+		}
+	}
 	fmt.Println(mat)
-	mat.Ident()
+	mat.Mult(*id)
 	fmt.Println(mat)
 }
