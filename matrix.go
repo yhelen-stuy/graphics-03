@@ -41,6 +41,20 @@ func (matrix Matrix) Ident() error {
 	return nil
 }
 
+// Method on a matrix, that modifies the m2, the receiver
+// DOES NOT modify m1
+// Performs function:
+// m1 * m2 -> m2
+func (m2 Matrix) Mult(m1 Matrix) error {
+	if m2.rows != m1.cols {
+		return errors.New("Error: dimensions incompatible")
+	}
+	for i := 0; i < m1.cols; i++ {
+		continue
+	}
+	return nil
+}
+
 func (matrix Matrix) String() string {
 	var buf bytes.Buffer
 	for i := range matrix.mat {
