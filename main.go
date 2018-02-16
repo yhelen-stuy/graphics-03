@@ -19,14 +19,26 @@ func main() {
 			id.mat[i][j] = float64(i)
 		}
 	}
+	fmt.Println("Making Matrix full of 2s")
 	fmt.Println(mat)
+	fmt.Println("Matrix where all values in a row are equal to the row they are in")
 	fmt.Println(id)
 	mat, _ = mat.Mult(*id)
+	fmt.Println("Multiplying the previous two should make a mat of all 12s")
 	fmt.Println(mat)
 
-	// fmt.Println("adding 1,2,3")
-	// mat.Ident()
-	// mat.AddPoint(1.0, 2.0, 3.0)
-	// fmt.Println(mat)
+	fmt.Println("Adding points (1,2,3) and (4,5,6) to identity")
+	mat.Ident()
+	mat.AddPoint(1.0, 2.0, 3.0)
+	mat.AddPoint(4.0, 5.0, 6.0)
+	fmt.Println(mat)
 
+	fmt.Println("Draw lines from (0,0) to (250,250) to (300,400)")
+	image := MakeImage(500, 500)
+	edges := MakeMatrix(4, 0)
+	edges.AddEdge(0.0, 0.0, 0.0, 250.0, 250.0, 0.0)
+	edges.AddEdge(250.0, 250.0, 0.0, 300.0, 400.0, 0.0)
+	fmt.Println(edges)
+	image.DrawLines(edges, Color{r: 255, b: 0, g: 0})
+	image.SavePPM("mat.ppm")
 }
